@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,138 @@
   <title>Document</title>
 </head>
 <body>
+  
+  <!-- Modal -->
+ <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ingresoModal" data-bs-whatever="@mdo">NUEVO</button>
+ <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">CONSULTAR</a>
+ <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">ACTUALIZAR</a>
+ <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">HISTORIAL DE EQUIPOS</a>
+
+ <div class="modal fade" id="ingresoModal" tabindex="-1" aria-labelledby="ingresoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">INGRESO DE DATOS-</h5>
+
+        <span class="input-group-text">Fecha</span>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body">
+        <form>
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">Cliente:</span>
+  <input type="text" class="form-control" [(ngModel)]="nuevaOrden.nombres" id="nombres" name="nombres" placeholder="Nombre & Apellido"  >
+<span class="input-group-text">#:</span>
+  <input type="text" class="form-control"  [(ngModel)]="nuevaOrden.idingreso" id="idingreso" name="idingreso" placeholder="Ingreso">
+</div>
+
+<div class="input-group mb-3">
+  <span class="input-group-text">C.I:</span>
+  <input type="text" class="form-control"  [(ngModel)]="nuevaOrden.cedula" id="cedula" name="cedula"  placeholder="Cedula ">
+  <span class="input-group-text">Tlf:</span>
+  <input type="text" class="form-control" [(ngModel)]="nuevaOrden.telefono" id="telefono" name="telefono" placeholder="telefono">
+
+</div>
+
+<div class="input-group mb-3">
+  <input type="text" class="form-control" [(ngModel)]="nuevaOrden.direccion" id="direccion" name="direccion" placeholder="Ciudad - Calle "  aria-describedby="basic-addon2">
+  <span class="input-group-text" id="basic-addon2">Direccion:</span>
+</div>
+
+<div class="input-group mb-3">
+  <select>
+    <option class="text-uppercase custom-select" value="0"  selected>Equipo</option>
+    <option  *ngFor="let equipo of equipos" >{{equipo.tipo}}</option>
+ </select>
+
+  <select>
+    <option class="text-uppercase custom-select" value="0"  selected>Marca</option>
+    <option  *ngFor="let marca of marcas">{{marca.marca}}</option>
+ </select>
+  <span class="input-group-text">Modelo:</span>
+  <input type="text" class="form-control" [(ngModel)]="nuevaOrden.modelo" id="modelo" name="modelo" placeholder="PAVILION">
+</div> 
+
+<div class="input-group mb-3">
+ 
+  <select class="text-uppercase">
+    <option class="text-uppercase custom-select" value="0" >Tecnico</option>
+    <option  *ngFor="let tecnico of tecnicos"   [ngValue]="tecnico.nombres">{{tecnico.nombres}}</option>
+ </select>
+  
+</div> 
+
+<div class="input-group">
+  <span class="input-group-text">Falla reportada:</span>
+  <textarea class="form-control" aria-label="With textarea" [(ngModel)]="nuevaOrden.Falla" id="falla" name="falla" placeholder="Eje. Equipo no enciende "></textarea>
+</div>
+<div>
+ -
+</div>
+<div class="input-group">
+  <span class="input-group-text">Comentario</span>
+  <textarea class="form-control" aria-label="With textarea" [(ngModel)]="nuevaOrden.Comentario" id="comentario" name="comentario" placeholder="Eje. Equipo sin cargador "></textarea>
+</div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
+        <button type="button" class="btn btn-primary" (click)="postOrden()">GUARDAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalToggleLabel">Consulta</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       
+
+<label for="exampleDataList" class="form-label">Ingrese numero de orden o cedula</label>
+<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Eje. 0065">
+
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">BUSCAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalToggleLabel2">Modal 2</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      AQUI SE MUESTRARAR DATOS DEL ESTADO DEL EQUIPO
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Volver</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<table>
+
+ 
+
+</table>
+
   
 </body>
 </html>
