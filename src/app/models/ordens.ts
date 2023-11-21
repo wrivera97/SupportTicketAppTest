@@ -10,14 +10,14 @@ equipo: string;
 marca: string;
 modelo: string;
 comentario: string;
-fallaReportada: any;
+fallaReportada: string;
 estado: boolean;
 Diagnostico: any;
 
 
 constructor(){
-this.id =0 ;
-this.idingreso=0 ;
+this.id = 0;
+this.idingreso= 0;
 this.nombres="";
 this.cedula=0;
 this.telefono=0;
@@ -27,6 +27,7 @@ this.equipo="";
 this.marca="";
 this.modelo="";
 this.comentario="";
+this.fallaReportada = "";
 this.estado=false;
 this.Diagnostico="";
 }

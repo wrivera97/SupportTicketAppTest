@@ -49,13 +49,12 @@
 
 <div class="input-group mb-3">
   <select>
-    <option class="text-uppercase custom-select" value="0"  selected>Equipo</option>
-    <option  *ngFor="let equipo of equipos" >{{equipo.tipo}}</option>
+    <option  *ngFor="let equipo of equipos" id="equipo" name="equipo">{{equipo.tipo}}</option>
  </select>
 
   <select>
-    <option class="text-uppercase custom-select" value="0"  selected>Marca</option>
-    <option  *ngFor="let marca of marcas">{{marca.marca}}</option>
+    
+    <option  *ngFor="let nombre of marcas">{{nombre.marca}}</option>
  </select>
   <span class="input-group-text">Modelo:</span>
   <input type="text" class="form-control" [(ngModel)]="nuevaOrden.modelo" id="modelo" name="modelo" placeholder="PAVILION">
@@ -63,16 +62,16 @@
 
 <div class="input-group mb-3">
  
-  <select class="text-uppercase">
-    <option class="text-uppercase custom-select" value="0" >Tecnico</option>
-    <option  *ngFor="let tecnico of tecnicos"   [ngValue]="tecnico.nombres">{{tecnico.nombres}}</option>
- </select>
+  <select class="text-uppercase"  [(ngModel)]="seleccionarTecnico.nombres" (change)="getTecnico(seleccionarTecnico.nombres)">
+  <option class="text-uppercase custom-select">Tecnico</option>
+  <option  *ngFor="let tecnico of tecnicos" [(ngModel)]="tecnico.nombres">{{tecnico.nombres}}</option>
+</select>
   
 </div> 
 
 <div class="input-group">
   <span class="input-group-text">Falla reportada:</span>
-  <textarea class="form-control" aria-label="With textarea" [(ngModel)]="nuevaOrden.Falla" id="falla" name="falla" placeholder="Eje. Equipo no enciende "></textarea>
+  <textarea class="form-control" aria-label="With textarea" [(ngModel)]="nuevaOrden.fallaReportada" id="fallaReportada" name="fallaReportada" placeholder="Eje. Equipo no enciende "></textarea>
 </div>
 <div>
  -
@@ -135,6 +134,11 @@
 
 <table>
 
+
+  <select class="text-uppercase"  [(ngModel)]="seleccionarTecnico.nombres" (change)="getTecnico(seleccionarTecnico.nombres)">
+    <option class="text-uppercase custom-select">Tecnico</option>
+    <option  *ngFor="let tecnico of tecnicos" [(ngModel)]="tecnico.nombres">{{tecnico.nombres}}</option>
+ </select>
  
 
 </table>

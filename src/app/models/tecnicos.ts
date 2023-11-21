@@ -4,7 +4,7 @@ export class Tecnicos {
   
     constructor() {
       this.id = 0;
-      this.nombres ="ggg";
+      this.nombres ="";
     }
   
     }

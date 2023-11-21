@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Tecnicos} from './models/tecnicos';
 import { SystechService } from './shared/systech.service';
-import { DatePipe } from '@angular/common';
 import { Orden } from './models/ordens';
 @Component({
   selector: 'app-root',
@@ -10,10 +9,11 @@ import { Orden } from './models/ordens';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  seleccionarTecnico:any;
   tecnicos:any;
   equipos:any;
   marcas:any;
-  nuevaOrden: any;
+  nuevaOrden: Orden | any;
 
   constructor(private systechService: SystechService) {
   }
@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
    this.getTecnicos();
    this.getEquipos();
    this.getMarcas();
+   this.seleccionarTecnico= new Tecnicos();
    this.nuevaOrden=new Orden();
   }
   getTecnicos() {
@@ -32,6 +33,17 @@ export class AppComponent implements OnInit {
       }
     
     );
+  }
+  getTecnico(tecnico: Tecnicos){
+    this.seleccionarTecnico.nombres = tecnico;
+    this.systechService.get('tecnico?id='+ this.seleccionarTecnico.nombres).subscribe(
+      (response) =>{
+        this.seleccionarTecnico= response;
+        console.log(response);
+      }
+
+    )
+
   }
   getEquipos(){
     this.systechService.get('equipo').subscribe(
@@ -57,6 +69,9 @@ export class AppComponent implements OnInit {
           alert('You successfully added a new recipe');
           this.nuevaOrden = new Orden();
           console.log(reponse);
+        }
+        else{
+          alert('error mi panita maus');
         }
       });
   }
