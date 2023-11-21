@@ -14,6 +14,9 @@ export class AppComponent implements OnInit {
   equipos:any;
   marcas:any;
   nuevaOrden: Orden | any;
+  ordenSeleccionada: Orden | any;
+  Ordenes: Orden | any;
+  OrdenEstado:Orden | any ;
 
   constructor(private systechService: SystechService) {
   }
@@ -22,16 +25,19 @@ export class AppComponent implements OnInit {
    this.getTecnicos();
    this.getEquipos();
    this.getMarcas();
+   this.getOrdenes();
    this.seleccionarTecnico= new Tecnicos();
    this.nuevaOrden=new Orden();
+   this.ordenSeleccionada= new Orden();
+   this.OrdenEstado =new Orden();
   }
   getTecnicos() {
     this.systechService.get('tecnico').subscribe(
       (response) => {
         this.tecnicos = response;
-    
+
       }
-    
+
     );
   }
   getTecnico(tecnico: Tecnicos){
@@ -49,7 +55,7 @@ export class AppComponent implements OnInit {
     this.systechService.get('equipo').subscribe(
       (response) => {
         this.equipos=response;
-       
+
       }
     );
   }
@@ -57,7 +63,7 @@ export class AppComponent implements OnInit {
     this.systechService.get('marca').subscribe(
       (response) => {
         this.marcas=response;
-      
+
       }
     );
   }
@@ -74,5 +80,35 @@ export class AppComponent implements OnInit {
           alert('error mi panita maus');
         }
       });
+  }
+
+  getOrdenes(){
+this.systechService.get('orden').subscribe(
+  (response)=>{
+this.Ordenes=response;
+    console.log(response);
+  }
+)
+
+  }
+
+  getOrden(idseleccionada: Orden){
+    this.ordenSeleccionada.idingreso= idseleccionada;
+this.systechService.get('orden?idingreso='+ this.ordenSeleccionada.idingreso).subscribe(
+  (response)=>{
+    this.ordenSeleccionada.idingreso=response;
+    console.log(response);
+
+  })
+
+  }
+  getOrdenEstado(){
+this.systechService.get('orden?estado=BODEGA').subscribe(
+  (response)=>{
+    this.OrdenEstado.estado=response;
+    console.log(response);
+
+  })
+
   }
 }

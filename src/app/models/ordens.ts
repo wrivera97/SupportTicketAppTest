@@ -1,6 +1,6 @@
 export  class Orden{
 id:number;
-idingreso:number;
+idingreso: any ;
 nombres: string;
 cedula: number;
 telefono: number;
@@ -11,13 +11,13 @@ marca: string;
 modelo: string;
 comentario: string;
 fallaReportada: string;
-estado: boolean;
-Diagnostico: any;
+estado: any;
+diagnostico: any;
 
 
 constructor(){
 this.id = 0;
-this.idingreso= 0;
+this.idingreso= "";
 this.nombres="";
 this.cedula=0;
 this.telefono=0;
@@ -28,7 +28,7 @@ this.marca="";
 this.modelo="";
 this.comentario="";
 this.fallaReportada = "";
-this.estado=false;
-this.Diagnostico="";
+this.estado="";
+this.diagnostico="";
 }
 }

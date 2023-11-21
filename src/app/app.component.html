@@ -7,24 +7,24 @@
   <title>Document</title>
 </head>
 <body>
-  
-  <!-- Modal -->
- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ingresoModal" data-bs-whatever="@mdo">NUEVO</button>
- <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">CONSULTAR</a>
- <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">ACTUALIZAR</a>
- <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">HISTORIAL DE EQUIPOS</a>
+  <nav class="navbar navbar-light bg-light">
+    <form class="container-fluid justify-content-start d-flex">
+      <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#ingresoModal">NUEVO</button>
+      <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#searchModal">CONSULTAR</button>
+      <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#ingresoModal" disabled>ACTUALIZAR ESTADO</button>
+      <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="card" data-bs-target="#hola" disabled>EQUIPOS EN BODEGA</button>
+    </form>
+  </nav>
 
+  <!-- Modal postOrden -->
  <div class="modal fade" id="ingresoModal" tabindex="-1" aria-labelledby="ingresoModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">INGRESO DE DATOS-</h5>
-
         <span class="input-group-text">Fecha</span>
-
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      
       <div class="modal-body">
         <form>
 <div class="input-group mb-3">
@@ -53,22 +53,22 @@
  </select>
 
   <select>
-    
+
     <option  *ngFor="let nombre of marcas">{{nombre.marca}}</option>
  </select>
   <span class="input-group-text">Modelo:</span>
   <input type="text" class="form-control" [(ngModel)]="nuevaOrden.modelo" id="modelo" name="modelo" placeholder="PAVILION">
-</div> 
+</div>
 
-<div class="input-group mb-3">
- 
+
+<!--<div class="input-group mb-3">
+
   <select class="text-uppercase"  [(ngModel)]="seleccionarTecnico.nombres" (change)="getTecnico(seleccionarTecnico.nombres)">
   <option class="text-uppercase custom-select">Tecnico</option>
   <option  *ngFor="let tecnico of tecnicos" [(ngModel)]="tecnico.nombres">{{tecnico.nombres}}</option>
 </select>
-  
-</div> 
-
+</div>
+-->
 <div class="input-group">
   <span class="input-group-text">Falla reportada:</span>
   <textarea class="form-control" aria-label="With textarea" [(ngModel)]="nuevaOrden.fallaReportada" id="fallaReportada" name="fallaReportada" placeholder="Eje. Equipo no enciende "></textarea>
@@ -84,7 +84,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
-        <button type="button" class="btn btn-primary" (click)="postOrden()">GUARDAR</button>
+        <button type="button" class="btn btn-primary" (click)="postOrden();">GUARDAR</button>
       </div>
     </div>
   </div>
@@ -92,7 +92,8 @@
 
 
 
-<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+
+<div class="modal fade" id="searchModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -100,49 +101,43 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-       
 
-<label for="exampleDataList" class="form-label">Ingrese numero de orden o cedula</label>
-<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Eje. 0065">
+
+<label for="exampleDataList" class="form-label">Ingrese numero de orden</label>
+<input class="form-control" list="datalistOptions" id="idOrden" name="idOrden" [(ngModel)]="ordenSeleccionada.idingreso"  placeholder="Eje. 0065">
 
 
       </div>
       <div class="modal-footer">
-        <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">BUSCAR</button>
+        <button class="btn btn-primary"  (click)="getOrden(this.ordenSeleccionada.idingreso);">BUSCAR</button>
       </div>
+      <div *ngFor="let ordenc of ordenSeleccionada">{{ordenc.nombres}}</div>
     </div>
-  </div>
-</div>
-<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalToggleLabel2">Modal 2</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      AQUI SE MUESTRARAR DATOS DEL ESTADO DEL EQUIPO
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Volver</button>
-      </div>
-    </div>
+
   </div>
 </div>
 
 
-
-<table>
-
-
-  <select class="text-uppercase"  [(ngModel)]="seleccionarTecnico.nombres" (change)="getTecnico(seleccionarTecnico.nombres)">
-    <option class="text-uppercase custom-select">Tecnico</option>
-    <option  *ngFor="let tecnico of tecnicos" [(ngModel)]="tecnico.nombres">{{tecnico.nombres}}</option>
- </select>
- 
-
-</table>
-
-  
+<!---getOrdenes-->
+<div> <h4 class="text-uppercase text-secondary text-center"> ORDENES DE  INGRESOS RECIENTES</h4></div>
+  <div class="row row-cols-1 row-cols-md-3 g-4" >
+    <div class="col"*ngFor="let ordenesT of Ordenes">
+      <div class="card h-100 card text-white card-left bg-secondary mb-3"  style="max-width: 25rem; ">
+        <div class="card-header"  [ngClass]="{'bg-info':ordenesT.estado =='BODEGA',
+  'bg-success':ordenesT.estado==='LISTO', 'bg-danger':ordenesT.estado=='NOVEDAD','bg-warning':ordenesT.estado=='REVISION'}">(ORDEN # {{ordenesT.idingreso}} ) {{ordenesT.estado}} </div>
+        <div class="card-body">
+          <h6 class="card-title">{{ordenesT.nombres}} CI:{{ordenesT.cedula}} </h6>
+          <h6 class="card-title">{{ordenesT.equipo}} {{ordenesT.marca}} {{ordenesT.modelo}} </h6>
+          <h6 class="card-title">{{ordenesT.fallaReportada}} {{ordenesT.comentario}} </h6>
+          <p class="card-text">DIAGNOSTICO:
+           ( {{ordenesT.diagnostico}})</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-ligth text-center">Última actualización {{'{{date}}'}} </small>
+        </div>
+      </div>
+    </div>
+    </div>
 </body>
+
 </html>
