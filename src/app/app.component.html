@@ -48,27 +48,29 @@
 </div>
 
 <div class="input-group mb-3">
-  <select>
-    <option  *ngFor="let equipo of equipos" id="equipo" name="equipo">{{equipo.tipo}}</option>
+  <select class="text-uppercase"  name="seleccionarDispositivo" [(ngModel)]="nuevaOrden.tipo" (change)="getDispositivo(seleccionarDispositivo.tipo)">
+    <option  *ngFor="let equipo of dispositivos" id="tipo" name="tipo">{{equipo.tipo}}</option>
  </select>
 
-  <select>
-
-    <option  *ngFor="let nombre of marcas">{{nombre.marca}}</option>
+  <select class="text-uppercase"  name="seleccionarMarca" [(ngModel)]="nuevaOrden.marca" (change)="getMarca(seleccionarMarca.marca)">
+  <option  *ngFor="let nombre of marcas">{{nombre.marca}}</option>
  </select>
+
   <span class="input-group-text">Modelo:</span>
   <input type="text" class="form-control" [(ngModel)]="nuevaOrden.modelo" id="modelo" name="modelo" placeholder="PAVILION">
+
+  <span class="input-group-text">Estado</span>
+  <input type="text" class="form-control" [(ngModel)]="nuevaOrden.estado" id="estado" name="estado" placeholder="ingresado">
 </div>
 
 
-<!--<div class="input-group mb-3">
-
-  <select class="text-uppercase"  [(ngModel)]="seleccionarTecnico.nombres" (change)="getTecnico(seleccionarTecnico.nombres)">
+<div class="input-group mb-3">
+  <select class="text-uppercase"  name="seleccionarTecnico" [(ngModel)]="nuevaOrden.tecnico" (change)="getTecnico(seleccionarTecnico.nombres)">
   <option class="text-uppercase custom-select">Tecnico</option>
-  <option  *ngFor="let tecnico of tecnicos" [(ngModel)]="tecnico.nombres">{{tecnico.nombres}}</option>
+  <option  name="tecnico" *ngFor="let tecnico of tecnicos">{{tecnico.nombres}}</option>
 </select>
 </div>
--->
+
 <div class="input-group">
   <span class="input-group-text">Falla reportada:</span>
   <textarea class="form-control" aria-label="With textarea" [(ngModel)]="nuevaOrden.fallaReportada" id="fallaReportada" name="fallaReportada" placeholder="Eje. Equipo no enciende "></textarea>
@@ -110,8 +112,9 @@
       </div>
       <div class="modal-footer">
         <button class="btn btn-primary"  (click)="getOrden(this.ordenSeleccionada.idingreso);">BUSCAR</button>
+        
       </div>
-      <div *ngFor="let ordenc of ordenSeleccionada">{{ordenc.nombres}}</div>
+      
     </div>
 
   </div>
@@ -119,16 +122,17 @@
 
 
 <!---getOrdenes-->
-<div> <h4 class="text-uppercase text-secondary text-center"> ORDENES DE  INGRESOS RECIENTES</h4></div>
+<div> <h4 class="text-uppercase text-secondary text-center"><br>Historial de equipos</h4> <br></div>
   <div class="row row-cols-1 row-cols-md-3 g-4" >
     <div class="col"*ngFor="let ordenesT of Ordenes">
-      <div class="card h-100 card text-white card-left bg-secondary mb-3"  style="max-width: 25rem; ">
+      <div class="card h-100 card text-secondary card-left bg-light mb-3"  style="max-width: 25rem; ">
         <div class="card-header"  [ngClass]="{'bg-info':ordenesT.estado =='BODEGA',
   'bg-success':ordenesT.estado==='LISTO', 'bg-danger':ordenesT.estado=='NOVEDAD','bg-warning':ordenesT.estado=='REVISION'}">(ORDEN # {{ordenesT.idingreso}} ) {{ordenesT.estado}} </div>
         <div class="card-body">
-          <h6 class="card-title">{{ordenesT.nombres}} CI:{{ordenesT.cedula}} </h6>
-          <h6 class="card-title">{{ordenesT.equipo}} {{ordenesT.marca}} {{ordenesT.modelo}} </h6>
-          <h6 class="card-title">{{ordenesT.fallaReportada}} {{ordenesT.comentario}} </h6>
+          <h6 class="card-title">CLIENTE: {{ordenesT.nombres}}</h6>
+          <h6 class="card-title">CI: {{ordenesT.cedula}}</h6>
+          <h6 class="card-title">EQUIPO:{{ordenesT.equipo}} {{ordenesT.marca}} {{ordenesT.modelo}} </h6>
+          <h6 class="card-title">FALLA: {{ordenesT.fallaReportada}} {{ordenesT.comentario}} </h6>
           <p class="card-text">DIAGNOSTICO:
            ( {{ordenesT.diagnostico}})</p>
         </div>

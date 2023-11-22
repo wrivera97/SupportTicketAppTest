@@ -3,6 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {Tecnicos} from './models/tecnicos';
 import { SystechService } from './shared/systech.service';
 import { Orden } from './models/ordens';
+import { Dispositivo } from './models/devices';
+import { Marca } from './models/marca';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,13 +12,16 @@ import { Orden } from './models/ordens';
 })
 export class AppComponent implements OnInit {
   seleccionarTecnico:any;
+  seleccionarDispositivo: any;
+  seleccionarMarca:any ;
   tecnicos:any;
-  equipos:any;
+  dispositivos:any;
   marcas:any;
   nuevaOrden: Orden | any;
   ordenSeleccionada: Orden | any;
   Ordenes: Orden | any;
   OrdenEstado:Orden | any ;
+  
 
   constructor(private systechService: SystechService) {
   }
@@ -27,6 +32,8 @@ export class AppComponent implements OnInit {
    this.getMarcas();
    this.getOrdenes();
    this.seleccionarTecnico= new Tecnicos();
+   this.seleccionarDispositivo= new Dispositivo();
+   this.seleccionarMarca= new Marca;
    this.nuevaOrden=new Orden();
    this.ordenSeleccionada= new Orden();
    this.OrdenEstado =new Orden();
@@ -42,7 +49,7 @@ export class AppComponent implements OnInit {
   }
   getTecnico(tecnico: Tecnicos){
     this.seleccionarTecnico.nombres = tecnico;
-    this.systechService.get('tecnico?id='+ this.seleccionarTecnico.nombres).subscribe(
+    this.systechService.get('tecnico?nombre'+ this.seleccionarTecnico.nombres).subscribe(
       (response) =>{
         this.seleccionarTecnico= response;
         console.log(response);
@@ -51,10 +58,34 @@ export class AppComponent implements OnInit {
     )
 
   }
+
+  getDispositivo(dispositivo: Dispositivo){
+    this.seleccionarDispositivo.tipo = dispositivo;
+    this.systechService.get('dispositivo?tipo='+ this.seleccionarDispositivo.tipo).subscribe(
+      (response) =>{
+        this.seleccionarDispositivo= response;
+        console.log(response);
+      }
+
+    )
+
+  }
+
+  getMarca(marca: Marca){
+    this.seleccionarMarca.marca = marca;
+    this.systechService.get('marca?marca='+ this.seleccionarMarca.marca).subscribe(
+      (response) =>{
+        this.seleccionarMarca= response;
+        console.log(response);
+      }
+
+    )
+
+  }
   getEquipos(){
-    this.systechService.get('equipo').subscribe(
+    this.systechService.get('dispositivo').subscribe(
       (response) => {
-        this.equipos=response;
+        this.dispositivos=response;
 
       }
     );
