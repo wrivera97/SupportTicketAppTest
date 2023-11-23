@@ -1,6 +1,7 @@
 export  class Orden{
 id:number;
 idingreso: any ;
+fecha: any;
 nombres: string;
 cedula: number;
 telefono: number;
@@ -18,6 +19,7 @@ diagnostico: any;
 constructor(){
 this.id = 0;
 this.idingreso= "";
+this.fecha="" ;
 this.nombres="";
 this.cedula=0;
 this.telefono=0;

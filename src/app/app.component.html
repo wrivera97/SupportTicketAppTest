@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
-<body>
+<body class="bg-light">
   <nav class="navbar navbar-light bg-light">
     <form class="container-fluid justify-content-start d-flex">
       <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#ingresoModal">NUEVO</button>
@@ -19,53 +18,52 @@
   <!-- Modal postOrden -->
  <div class="modal fade" id="ingresoModal" tabindex="-1" aria-labelledby="ingresoModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content bg-light">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">INGRESO DE DATOS-</h5>
-        <span class="input-group-text">Fecha</span>
+        <h5 class="modal-title" id="exampleModalLabel"> NUEVO INGRESO </h5>
+        <!--<a  class="btn btn-light text-ligth">{{currentDate | date:'dd-MM-yyyy'}}<span class="badge badge-light"></span></a>-->
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form  #myForm= "ngForm">
 <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon1">Cliente:</span>
-  <input type="text" class="form-control" [(ngModel)]="nuevaOrden.nombres" id="nombres" name="nombres" placeholder="Nombre & Apellido"  >
+  <input type="text" class="form-control" [(ngModel)]="nuevaOrden.nombres" id="nombres" name="nombres" placeholder="Nombre & Apellido" required  >
 <span class="input-group-text">#:</span>
-  <input type="text" class="form-control"  [(ngModel)]="nuevaOrden.idingreso" id="idingreso" name="idingreso" placeholder="Ingreso">
+  <input type="text" class="form-control"  [(ngModel)]="nuevaOrden.idingreso" id="idingreso" name="idingreso" placeholder="Ingreso" required>
 </div>
 
 <div class="input-group mb-3">
   <span class="input-group-text">C.I:</span>
-  <input type="text" class="form-control"  [(ngModel)]="nuevaOrden.cedula" id="cedula" name="cedula"  placeholder="Cedula ">
+  <input type="text" class="form-control"  [(ngModel)]="nuevaOrden.cedula" id="cedula" name="cedula"  placeholder="Cedula " required>
   <span class="input-group-text">Tlf:</span>
-  <input type="text" class="form-control" [(ngModel)]="nuevaOrden.telefono" id="telefono" name="telefono" placeholder="telefono">
+  <input type="text" class="form-control" [(ngModel)]="nuevaOrden.telefono" id="telefono" name="telefono" placeholder="telefono" required>
 
 </div>
 
 <div class="input-group mb-3">
-  <input type="text" class="form-control" [(ngModel)]="nuevaOrden.direccion" id="direccion" name="direccion" placeholder="Ciudad - Calle "  aria-describedby="basic-addon2">
+  <input type="text" class="form-control" [(ngModel)]="nuevaOrden.direccion" id="direccion" name="direccion" placeholder="Ciudad - Calle "  aria-describedby="basic-addon2" required>
   <span class="input-group-text" id="basic-addon2">Direccion:</span>
 </div>
 
 <div class="input-group mb-3">
-  <select class="text-uppercase"  name="seleccionarDispositivo" [(ngModel)]="nuevaOrden.tipo" (change)="getDispositivo(seleccionarDispositivo.tipo)">
+  <select class="form-select text-uppercase"  name="seleccionarDispositivo" [(ngModel)]="nuevaOrden.tipo" (change)="getDispositivo(seleccionarDispositivo.tipo)">
+    <option class="text-uppercase custom-select">EQUIPO</option>
     <option  *ngFor="let equipo of dispositivos" id="tipo" name="tipo">{{equipo.tipo}}</option>
  </select>
 
-  <select class="text-uppercase"  name="seleccionarMarca" [(ngModel)]="nuevaOrden.marca" (change)="getMarca(seleccionarMarca.marca)">
+  <select class="form-select text-uppercase"  name="seleccionarMarca" [(ngModel)]="nuevaOrden.marca" (change)="getMarca(seleccionarMarca.marca)">
+    <option class="text-uppercase custom-select">MARCA</option>
   <option  *ngFor="let nombre of marcas">{{nombre.marca}}</option>
  </select>
 
   <span class="input-group-text">Modelo:</span>
-  <input type="text" class="form-control" [(ngModel)]="nuevaOrden.modelo" id="modelo" name="modelo" placeholder="PAVILION">
-
-  <span class="input-group-text">Estado</span>
-  <input type="text" class="form-control" [(ngModel)]="nuevaOrden.estado" id="estado" name="estado" placeholder="ingresado">
+  <input type="text" class="form-control" [(ngModel)]="nuevaOrden.modelo" id="modelo" name="modelo" placeholder="PAVILION" required>
 </div>
 
 
 <div class="input-group mb-3">
-  <select class="text-uppercase"  name="seleccionarTecnico" [(ngModel)]="nuevaOrden.tecnico" (change)="getTecnico(seleccionarTecnico.nombres)">
+  <select class="form-select text-uppercase"  name="seleccionarTecnico" [(ngModel)]="nuevaOrden.tecnico" (change)="getTecnico(seleccionarTecnico.nombres)">
   <option class="text-uppercase custom-select">Tecnico</option>
   <option  name="tecnico" *ngFor="let tecnico of tecnicos">{{tecnico.nombres}}</option>
 </select>
@@ -73,20 +71,21 @@
 
 <div class="input-group">
   <span class="input-group-text">Falla reportada:</span>
-  <textarea class="form-control" aria-label="With textarea" [(ngModel)]="nuevaOrden.fallaReportada" id="fallaReportada" name="fallaReportada" placeholder="Eje. Equipo no enciende "></textarea>
+  <textarea class="form-control" aria-label="With textarea" [(ngModel)]="nuevaOrden.fallaReportada" id="fallaReportada" name="fallaReportada" placeholder="Eje. Equipo no enciende " required> </textarea>
 </div>
 <div>
  -
 </div>
 <div class="input-group">
-  <span class="input-group-text">Comentario</span>
-  <textarea class="form-control" aria-label="With textarea" [(ngModel)]="nuevaOrden.Comentario" id="comentario" name="comentario" placeholder="Eje. Equipo sin cargador "></textarea>
+  <span class="input-group-text" >Comentario</span>
+  <textarea class="form-control" aria-label="With textarea" [(ngModel)]="nuevaOrden.Comentario" id="comentario" name="comentario" required placeholder="Eje. Equipo sin cargador "></textarea>
 </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
-        <button type="button" class="btn btn-primary" (click)="postOrden();">GUARDAR</button>
+
+        <button type="button" class="btn btn-primary"  [disabled]="myForm.form.invalid" (click)="postOrden();">GUARDAR</button>
       </div>
     </div>
   </div>
@@ -112,36 +111,31 @@
       </div>
       <div class="modal-footer">
         <button class="btn btn-primary"  (click)="getOrden(this.ordenSeleccionada.idingreso);">BUSCAR</button>
-        
       </div>
-      
     </div>
-
   </div>
 </div>
-
-
 <!---getOrdenes-->
 <div> <h4 class="text-uppercase text-secondary text-center"><br>Historial de equipos</h4> <br></div>
   <div class="row row-cols-1 row-cols-md-3 g-4" >
-    <div class="col"*ngFor="let ordenesT of Ordenes">
-      <div class="card h-100 card text-secondary card-left bg-light mb-3"  style="max-width: 25rem; ">
+    <div class="col"*ngFor="let ordenesT of Ordenes | orderBy: '-' | paginate: { itemsPerPage: 9, currentPage: p } ">
+      <div class="card h-100 card text-dark card-left bg-light mb-3"  style="max-width: 25rem; ">
         <div class="card-header"  [ngClass]="{'bg-info':ordenesT.estado =='BODEGA',
   'bg-success':ordenesT.estado==='LISTO', 'bg-danger':ordenesT.estado=='NOVEDAD','bg-warning':ordenesT.estado=='REVISION'}">(ORDEN # {{ordenesT.idingreso}} ) {{ordenesT.estado}} </div>
         <div class="card-body">
-          <h6 class="card-title">CLIENTE: {{ordenesT.nombres}}</h6>
-          <h6 class="card-title">CI: {{ordenesT.cedula}}</h6>
-          <h6 class="card-title">EQUIPO:{{ordenesT.equipo}} {{ordenesT.marca}} {{ordenesT.modelo}} </h6>
-          <h6 class="card-title">FALLA: {{ordenesT.fallaReportada}} {{ordenesT.comentario}} </h6>
-          <p class="card-text">DIAGNOSTICO:
+          <h6 class="card-title text-uppercase font-weight-bold">CLIENTE: {{ordenesT.nombres}}</h6>
+          <h6 class="card-title text-uppercase">CI: {{ordenesT.cedula}}</h6>
+          <h6 class="card-title text-uppercase">EQUIPO: {{ordenesT.tipo}} {{ordenesT.marca}} {{ordenesT.modelo}} </h6>
+          <h6 class="card-title text-uppercase">FALLA: {{ordenesT.fallaReportada}} {{ordenesT.comentario}} </h6>
+          <p class="card-text text-uppercase">DIAGNOSTICO:
            ( {{ordenesT.diagnostico}})</p>
         </div>
         <div class="card-footer">
-          <small class="text-ligth text-center">Última actualización {{'{{date}}'}} </small>
+          <small class="text-ligth text-center">Fecha de ingreso: {{ordenesT.fecha | date:'dd-MM-yyyy'}} </small>
         </div>
       </div>
     </div>
     </div>
+    <pagination-controls class="text-center" previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="p = $event"></pagination-controls>
 </body>
-
 </html>
