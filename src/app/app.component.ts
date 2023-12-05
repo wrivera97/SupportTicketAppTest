@@ -20,11 +20,13 @@ export class AppComponent implements OnInit {
   dispositivos:any;
   marcas:any;
   nuevaOrden: Orden | any;
-  ordenSeleccionada: Orden | any;
+  ordenSeleccionada:Orden| any ;
   Ordenes: Orden | any;
   OrdenEstado:Orden | any ;
   estado: Estado |any;
   currentDate = new Date();
+  actualizarOrden: any;
+
 
   p:number =1;
 
@@ -45,6 +47,7 @@ export class AppComponent implements OnInit {
    this.ordenSeleccionada= new Orden();
    this.OrdenEstado =new Orden();
    this.estado = new Estado();
+   this.actualizarOrden =new Orden();
 
 
 
@@ -63,7 +66,7 @@ export class AppComponent implements OnInit {
     this.systechService.get('tecnico?nombre'+ this.seleccionarTecnico.nombres).subscribe(
       (response) =>{
         this.seleccionarTecnico= response;
-        console.log(response);
+
       }
 
     )
@@ -75,7 +78,7 @@ export class AppComponent implements OnInit {
     this.systechService.get('dispositivo?tipo='+ this.seleccionarDispositivo.tipo).subscribe(
       (response) =>{
         this.seleccionarDispositivo= response;
-        console.log(response);
+
       }
 
     )
@@ -87,7 +90,7 @@ export class AppComponent implements OnInit {
     this.systechService.get('marca?marca='+ this.seleccionarMarca.marca).subscribe(
       (response) =>{
         this.seleccionarMarca= response;
-        console.log(response);
+
       }
 
     )
@@ -121,19 +124,30 @@ export class AppComponent implements OnInit {
           this.nuevaOrden = new Orden();
           this.getOrdenes();
           Swal.fire('Registro', 'Creado ', 'success')
-          console.log(reponse);
+
         }
         else{
-          alert('error ');
+          Swal.fire('error ','error','error');
         }
       });
+  }
+
+
+  putOrden(actualizaOrden: Orden){
+    this.actualizarOrden=actualizaOrden;
+this.systechService.put('orden/' + this.actualizarOrden.id, this.actualizarOrden).subscribe(
+  (response)=>{
+    alert('ok mi panita mouse');
+    console.log(response);
+  });
+
   }
 
   getOrdenes(){
 this.systechService.get('orden').subscribe(
   (response)=>{
 this.Ordenes=response;
-    console.log(response);
+
 
   }
 )
@@ -145,7 +159,7 @@ this.Ordenes=response;
 this.systechService.get('orden?idingreso='+ this.ordenSeleccionada.idingreso).subscribe(
   (response)=>{
     this.ordenSeleccionada.idingreso=response;
-    console.log(response);
+    console.log(response)
 
   })
 
@@ -154,7 +168,7 @@ this.systechService.get('orden?idingreso='+ this.ordenSeleccionada.idingreso).su
 this.systechService.get('orden?estado=BODEGA').subscribe(
   (response)=>{
     this.OrdenEstado.estado=response;
-    console.log(response);
+
 
   })
 

@@ -10,8 +10,8 @@
     <form class="container-fluid justify-content-start d-flex">
       <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#ingresoModal">NUEVO</button>
       <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#searchModal">CONSULTAR</button>
-      <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#ingresoModal" disabled>ACTUALIZAR ESTADO</button>
-      <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="card" data-bs-target="#hola" disabled>EQUIPOS EN BODEGA</button>
+      <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#actualizaModal" disabled>ACTUALIZAR ESTADO</button>
+      <button type="button" class="btn btn-sm btn-outline-secondary me-2"(click)="getOrdenEstado()" disabled>EQUIPOS EN BODEGA</button>
     </form>
   </nav>
 
@@ -91,6 +91,27 @@
   </div>
 </div>
 
+<!--puttest-->
+<!--<div class="modal fade" id="actualizaModal" tabindex="-1" aria-labelledby="actualizaModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> NUEVO INGRESO </h5>
+        <a  class="btn btn-light text-ligth">{{currentDate | date:'dd-MM-yyyy'}}<span class="badge badge-light"></span></a>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form  #myForm= "ngForm">
+<div class="input-group mb-3" *ngFor="let actualizarorden of ordenSeleccionada">
+  <span class="input-group-text" id="basic-addon1">Cliente:</span>
+  <input type="text" class="form-control" [(ngModel)]="actualizarorden.nombres" id="nombres" name="nombres" placeholder="Nombre & Apellido" required  >
+  <button type="button" (click)="putOrden(actualizarorden)">ok</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>-->
 
 
 
@@ -116,7 +137,9 @@
   </div>
 </div>
 <!---getOrdenes-->
-<div> <h4 class="text-uppercase text-secondary text-center"><br>Historial de equipos</h4> <br></div>
+<div>
+   <h4 class="text-uppercase text-secondary text-center"><br>Historial de equipos </h4><br></div>
+
   <div class="row row-cols-1 row-cols-md-3 g-4" >
     <div class="col"*ngFor="let ordenesT of Ordenes | orderBy: '-' | paginate: { itemsPerPage: 9, currentPage: p } ">
       <div class="card h-100 card text-dark card-left bg-light mb-3"  style="max-width: 25rem; ">
@@ -131,8 +154,9 @@
            ( {{ordenesT.diagnostico}})</p>
         </div>
         <div class="card-footer">
-          <small class="text-ligth text-center ">Fecha de ingreso: {{ordenesT.fecha | date:'dd-MM-yyyy'}} </small>
-         <a href="{{'https://api.whatsapp.com/send/?phone=593'+ ordenesT.telefono +'&text=Buen dia %2C de soluciones informaticas donde usted dejo su equipo para revision le comento que su equipo&type=phone_number&app_absent=0'}}" target="_blank" rel="noopener noreferrer">hois </a>
+          <small class="text-ligth text-center ">Fecha ingreso: {{ordenesT.fecha | date:'dd-MM-yyyy'}} </small>
+        <a class="btn btn-outline-info btn-sm" role="button" href="{{'https://api.whatsapp.com/send/?phone=593'+ ordenesT.telefono +'&text=Buen dia %2C de soluciones informaticas donde usted dejo su equipo para revision le comento que su equipo:&type=phone_number&app_absent=0'}}" target="_blank" rel="noopener noreferrer">N</a>
+         <button class="btn btn-outline-secondary btn-sm" type="button">A</button>
         </div>
       </div>
     </div>
