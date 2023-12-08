@@ -135,12 +135,14 @@
     <label class="form-control" aria-label="With textarea" id="tecnico" name="tecnico">{{test.modelo}} </label>
   </div>
 
-  <div class="input-group mb-3" *ngFor="let estadoes  of estados">
+  <div class="input-group mb-3" >
     <span class="input-group-text" >Tecnico:</span>
     <label class="form-control" aria-label="With textarea" id="tecnico" name="tecnico">{{test.tecnico}} </label>
 
-    <span class="input-group-text"  >Estado:</span>
-    <input class="form-control" aria-label="With textarea" id="estado" name="estado" value="">{{estadoes.estado}}
+  <select class="form-select text-uppercase"  name="estado">
+    <option class="text-uppercase custom-select">*ESTADO</option>
+  <option   *ngFor="let estadoes  of estados">{{estadoes.estado}}</option>
+ </select>
   </div>
 
   <div class="input-group">
@@ -151,13 +153,16 @@
    -
   </div>
   <div class="input-group">
-    <span class="input-group-text" >Diagnostico:</span>
+    <span class="input-group-text" >*Diagnostico:</span>
     <textarea class="form-control" aria-label="With textarea" id="comentario" name="comentario" value="{{test.diagnostico}}"></textarea>
   </div>
 </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary"  [disabled]="myForm.form.invalid">Actualizar</button>
+        <div class="alert alert-warning" role="alert">
+         * Solo podra actualizar el estado y el diagnostico!
+        </div>
+        <button type="button" class="btn btn-primary"  >Actualizar</button>
       </div>
     </div>
   </div>
