@@ -8,10 +8,11 @@
 <body class="bg-light">
   <nav class="navbar navbar-light bg-light">
     <form class="container-fluid justify-content-start d-flex">
+      <button type="button" class="btn btn-sm btn-outline-secondary me-2" autocomplete="off" checked (click)="this.getOrdenes()">INICIO</button>
       <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#ingresoModal">NUEVO</button>
       <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#searchModal">CONSULTAR</button>
-      <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#actualizaModal" disabled>ACTUALIZAR ESTADO</button>
-      <button type="button" class="btn btn-sm btn-outline-secondary me-2"(click)="getOrdenEstado()" disabled>EQUIPOS EN BODEGA</button>
+      <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#actualizarModal">ACTUALIZAR ESTADO</button>
+      <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#bodegaModal">EQUIPOS EN BODEGA</button>
     </form>
   </nav>
 
@@ -92,50 +93,182 @@
 </div>
 
 <!--puttest-->
-<!--<div class="modal fade" id="actualizaModal" tabindex="-1" aria-labelledby="actualizaModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content bg-light">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"> NUEVO INGRESO </h5>
-        <a  class="btn btn-light text-ligth">{{currentDate | date:'dd-MM-yyyy'}}<span class="badge badge-light"></span></a>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form  #myForm= "ngForm">
-<div class="input-group mb-3" *ngFor="let actualizarorden of ordenSeleccionada">
-  <span class="input-group-text" id="basic-addon1">Cliente:</span>
-  <input type="text" class="form-control" [(ngModel)]="actualizarorden.nombres" id="nombres" name="nombres" placeholder="Nombre & Apellido" required  >
-  <button type="button" (click)="putOrden(actualizarorden)">ok</button>
-</div>
-</form>
-</div>
-</div>
-</div>
-</div>-->
-
-
-
-<div class="modal fade" id="searchModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="actualizarModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalToggleLabel">Consulta</h5>
+        <h5 class="modal-title" id="exampleModalToggleLabel"></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body bg-light">
 
 
-<label for="exampleDataList" class="form-label">Ingrese numero de orden</label>
-<input class="form-control" list="datalistOptions" id="idOrden" name="idOrden" [(ngModel)]="ordenSeleccionada.idingreso"  placeholder="Eje. 0065">
+<label for="exampleDataList" class="form-label text-center">Ingrese numero de orden</label>
+
+<div class="input-group mb-3">
+  <input class="form-control" list="datalistOptions" id="idOrden" name="idOrden" [(ngModel)]="ordenSeleccionada.idingreso"  placeholder="Eje. 0065 o Juan Aguirre">
+  <div class="input-group-append">
+    <button class="btn btn-outline-dark"  (click)="this.getOrden(this.ordenSeleccionada.idingreso);">BUSCAR</button>
+  </div>
+</div>
+
+<div  *ngFor=" let test of datatest" >
+  <h4 class="text-uppercase text-secondary text-center"><br>{{test.nombres}} - {{test.cedula}}</h4><br>
 
 
+  <div class="input-group mb-3">
+    <span class="input-group-text">Direccion:</span>
+    <label class="form-control" aria-label="With textarea" id="tecnico" name="tecnico">{{test.direccion}} </label>
+
+    <span class="input-group-text">Telefono:</span>
+    <label class="form-control" aria-label="With textarea" id="tecnico" name="tecnico">{{test.telefono}} </label>
+  </div>
+
+  <div class="input-group mb-3">
+    <span class="input-group-text">Equipo:</span>
+    <label class="form-control" aria-label="With textarea" id="tecnico" name="tecnico">{{test.tipo}} </label>
+
+    <span class="input-group-text">Marca:</span>
+    <label class="form-control" aria-label="With textarea" id="tecnico" name="tecnico">{{test.marca}} </label>
+
+    <span class="input-group-text">Modelo:</span>
+    <label class="form-control" aria-label="With textarea" id="tecnico" name="tecnico">{{test.modelo}} </label>
+  </div>
+
+  <div class="input-group mb-3" *ngFor="let estadoes  of estados">
+    <span class="input-group-text" >Tecnico:</span>
+    <label class="form-control" aria-label="With textarea" id="tecnico" name="tecnico">{{test.tecnico}} </label>
+
+    <span class="input-group-text"  >Estado:</span>
+    <input class="form-control" aria-label="With textarea" id="estado" name="estado" value="">{{estadoes.estado}}
+  </div>
+
+  <div class="input-group">
+    <span class="input-group-text">Falla reportada:</span>
+    <label class="form-control" aria-label="With textarea" id="fallaReportada" name="fallaReportada" disabled>{{test.fallaReportada}} </label>
+  </div>
+  <div>
+   -
+  </div>
+  <div class="input-group">
+    <span class="input-group-text" >Diagnostico:</span>
+    <textarea class="form-control" aria-label="With textarea" id="comentario" name="comentario" value="{{test.diagnostico}}"></textarea>
+  </div>
+</div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-primary"  (click)="getOrden(this.ordenSeleccionada.idingreso);">BUSCAR</button>
+        <button type="button" class="btn btn-primary"  [disabled]="myForm.form.invalid">Actualizar</button>
       </div>
     </div>
   </div>
 </div>
+
+
+
+
+
+
+<div class="modal fade" id="searchModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalToggleLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body bg-light">
+
+
+<label for="exampleDataList" class="form-label text-center">Ingrese numero de orden, cedula o nombres</label>
+
+<div class="input-group mb-3">
+  <input class="form-control" list="datalistOptions" id="idOrden" name="idOrden" [(ngModel)]="ordenSeleccionada.idingreso"  placeholder="Eje. 0065 o Juan Aguirre">
+  <div class="input-group-append">
+    <button class="btn btn-outline-dark"  (click)="this.getOrden(this.ordenSeleccionada.idingreso);">BUSCAR</button>
+  </div>
+</div>
+
+<div  *ngFor=" let test of datatest" >
+  <h4 class="text-uppercase text-secondary text-center"><br>{{test.nombres}} - {{test.cedula}} | ({{test.estado}})</h4><br>
+
+
+  <div class="input-group mb-3">
+    <span class="input-group-text">Direccion:</span>
+    <label class="form-control" aria-label="With textarea" id="tecnico" name="tecnico">{{test.direccion}} </label>
+
+    <span class="input-group-text">Telefono:</span>
+    <label class="form-control" aria-label="With textarea" id="tecnico" name="tecnico">{{test.telefono}} </label>
+  </div>
+
+  <div class="input-group mb-3">
+    <span class="input-group-text">Equipo:</span>
+    <label class="form-control" aria-label="With textarea" id="tecnico" name="tecnico">{{test.tipo}} </label>
+
+    <span class="input-group-text">Marca:</span>
+    <label class="form-control" aria-label="With textarea" id="tecnico" name="tecnico">{{test.marca}} </label>
+
+    <span class="input-group-text">Modelo:</span>
+    <label class="form-control" aria-label="With textarea" id="tecnico" name="tecnico">{{test.modelo}} </label>
+  </div>
+
+  <div class="input-group mb-3">
+    <span class="input-group-text" >Tecnico:</span>
+    <label class="form-control" aria-label="With textarea" id="tecnico" name="tecnico">{{test.tecnico}} </label>
+  </div>
+
+  <div class="input-group">
+    <span class="input-group-text">Falla reportada:</span>
+    <label class="form-control" aria-label="With textarea" id="fallaReportada" name="fallaReportada">{{test.fallaReportada}} </label>
+  </div>
+  <div>
+   -
+  </div>
+  <div class="input-group">
+    <span class="input-group-text" >Diagnostico:</span>
+    <label class="form-control" aria-label="With textarea" id="comentario" name="comentario">{{test.diagnostico}}</label>
+  </div>
+</div>
+<div class="modal-footer text-dark" *ngFor="let testf of datatest">
+  <small class="text-ligth alert alert-warning " role="alert">Este equipo ingresó el : {{testf.fecha | date:'dd-MM-yyyy'}} </small>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+<!---bodega-->
+<div class="modal fade modal-xl bg-secondary" id="bodegaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content ">
+      <div class="modal-header ">
+       <h4 class="text-uppercase text-secondary text-center"><br> EQUIPOS EN BODEGA</h4><br>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="row row-cols-1 row-cols-md-3 g-4" >
+        <div class="col"*ngFor="let bodegaOrden of OrdenEstado | orderBy: '-' | paginate: { itemsPerPage: 9, currentPage: pb } ">
+          <div class="card h-100 card text-dark card-left bg-light mb-3"  style="max-width: 25rem; ">
+            <div class="card-header"  [ngClass]="{'bg-info':bodegaOrden.estado =='BODEGA',
+      'bg-success':bodegaOrden.estado==='LISTO', 'bg-danger':bodegaOrden.estado=='NOVEDAD','bg-warning':bodegaOrden.estado=='REVISION'}">(ORDEN # {{bodegaOrden.idingreso}} ) {{bodegaOrden.estado}} </div>
+            <div class="card-body">
+              <h6 class="card-title text-uppercase font-weight-bold">CLIENTE: {{bodegaOrden.nombres}}</h6>
+              <h6 class="card-title text-uppercase">CI: {{bodegaOrden.cedula}}</h6>
+              <h6 class="card-title text-uppercase">EQUIPO: {{bodegaOrden.tipo}} {{bodegaOrden.marca}} {{bodegaOrden.modelo}} </h6>
+              <h6 class="card-title text-uppercase">FALLA: {{bodegaOrden.fallaReportada}} {{bodegaOrden.comentario}} </h6>
+              <p class="card-text text-uppercase">DIAGNOSTICO:
+               ( {{bodegaOrden.diagnostico}})</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-ligth text-center ">Fecha ingreso: {{bodegaOrden.fecha | date:'dd-MM-yyyy'}} </small>
+            <a class="btn btn-outline-info btn-sm" role="button" href="{{'https://api.whatsapp.com/send/?phone=593'+ bodegaOrden.telefono +'&text=Buen dia %2C de soluciones informaticas donde usted dejo su equipo para revision le comento que su equipo:&type=phone_number&app_absent=0'}}" target="_blank" rel="noopener noreferrer">N</a>
+            </div>
+          </div>
+        </div>
+        </div>
+      <div class="modal-footer">
+        <pagination-controls class="text-center" previousLabel="Ant.." nextLabel="Sig.." (pageChange)="pb = $event"></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!---getOrdenes-->
 <div>
    <h4 class="text-uppercase text-secondary text-center"><br>Historial de equipos </h4><br></div>
@@ -156,7 +289,7 @@
         <div class="card-footer">
           <small class="text-ligth text-center ">Fecha ingreso: {{ordenesT.fecha | date:'dd-MM-yyyy'}} </small>
         <a class="btn btn-outline-info btn-sm" role="button" href="{{'https://api.whatsapp.com/send/?phone=593'+ ordenesT.telefono +'&text=Buen dia %2C de soluciones informaticas donde usted dejo su equipo para revision le comento que su equipo:&type=phone_number&app_absent=0'}}" target="_blank" rel="noopener noreferrer">N</a>
-         <button class="btn btn-outline-secondary btn-sm" type="button">A</button>
+         <!--<button class="btn btn-outline-secondary btn-sm" type="button">A</button>-->
         </div>
       </div>
     </div>

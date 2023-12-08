@@ -27,8 +27,12 @@ export class AppComponent implements OnInit {
   currentDate = new Date();
   actualizarOrden: any;
 
+  datatest: any;
+  estados:Estado | any;
+
 
   p:number =1;
+  pb: number=1;
 
 
   constructor(private systechService: SystechService) {
@@ -40,6 +44,8 @@ export class AppComponent implements OnInit {
    this.getEquipos();
    this.getMarcas();
    this.getOrdenes();
+   this.getOrdenEstado();
+   this.getEstados();
    this.seleccionarTecnico= new Tecnicos();
    this.seleccionarDispositivo= new Dispositivo();
    this.seleccionarMarca= new Marca;
@@ -158,8 +164,8 @@ this.Ordenes=response;
     this.ordenSeleccionada.idingreso= idseleccionada;
 this.systechService.get('orden?idingreso='+ this.ordenSeleccionada.idingreso).subscribe(
   (response)=>{
-    this.ordenSeleccionada.idingreso=response;
-    console.log(response)
+    this.datatest=response;
+
 
   })
 
@@ -167,10 +173,16 @@ this.systechService.get('orden?idingreso='+ this.ordenSeleccionada.idingreso).su
   getOrdenEstado(){
 this.systechService.get('orden?estado=BODEGA').subscribe(
   (response)=>{
-    this.OrdenEstado.estado=response;
-
+    this.OrdenEstado=response;
 
   })
 
+}
+getEstados(){
+  this.systechService.get('estado').subscribe(
+    (response)=>{
+    this.estados=response;
+    }
+  )
 }
 }
