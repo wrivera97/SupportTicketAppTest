@@ -27,4 +27,8 @@ export class SystechService {
     url = environment.API_URL + url;
     return this._http.delete(url , {headers: this.headers});
   }
+  patch(url:string, data: any){
+    url = environment.API_URL + url;
+    return this._http.patch(url,data, {headers: this.headers});
+  }
 }

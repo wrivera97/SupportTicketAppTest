@@ -7,6 +7,7 @@ import { Dispositivo } from './models/devices';
 import { Marca } from './models/marca';
 import { Estado } from './models/estado';
 import Swal from 'sweetalert2';
+import { patchTest } from './models/patchtest.model';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -20,16 +21,14 @@ export class AppComponent implements OnInit {
   dispositivos:any;
   marcas:any;
   nuevaOrden: Orden | any;
+  actualizarOrden: patchTest | any ;
   ordenSeleccionada:Orden| any ;
   Ordenes: Orden | any;
   OrdenEstado:Orden | any ;
   estado: Estado |any;
   currentDate = new Date();
-  actualizarOrden: any;
-
-  datatest: any;
+  datatest:Orden| any;
   estados:Estado | any;
-
 
   p:number =1;
   pb: number=1;
@@ -53,8 +52,8 @@ export class AppComponent implements OnInit {
    this.ordenSeleccionada= new Orden();
    this.OrdenEstado =new Orden();
    this.estado = new Estado();
-   this.actualizarOrden =new Orden();
-
+   this.actualizarOrden= new patchTest();
+   this.datatest = new Orden();
 
 
   }
@@ -124,8 +123,8 @@ export class AppComponent implements OnInit {
     this.nuevaOrden.fecha= this.currentDate;
     this.systechService.post('orden', this.nuevaOrden).subscribe(
 
-      (reponse) => {
-        if (reponse) {
+      (response) => {
+        if (response) {
 
           this.nuevaOrden = new Orden();
           this.getOrdenes();
@@ -139,15 +138,32 @@ export class AppComponent implements OnInit {
   }
 
 
-  putOrden(actualizaOrden: Orden){
+/**  putOrden(actualizaOrden: Orden){
     this.actualizarOrden=actualizaOrden;
 this.systechService.put('orden/' + this.actualizarOrden.id, this.actualizarOrden).subscribe(
   (response)=>{
     alert('ok mi panita mouse');
     console.log(response);
-  });
+  }); */
 
+patchOrden(ordenActualizada:patchTest){
+this.actualizarOrden =ordenActualizada;
+this.actualizarOrden.fechaactualizacion= this.currentDate;
+this.systechService.patch('orden/'+ this.actualizarOrden.id , this.actualizarOrden).subscribe(
+  (response)=>{
+    if (response) {
+      this.getOrdenes();
+      Swal.fire('Registro', 'Actualizado ', 'success')
+
+    }
+    else{
+      Swal.fire('error ','error','error');
+    }
+
+  });
   }
+
+
 
   getOrdenes(){
 this.systechService.get('orden').subscribe(
@@ -165,8 +181,28 @@ this.Ordenes=response;
 this.systechService.get('orden?idingreso='+ this.ordenSeleccionada.idingreso).subscribe(
   (response)=>{
     this.datatest=response;
+console.log(response);
+  })
+
+  }
 
 
+  getOrdenNombre(idseleccionada: Orden){
+    this.ordenSeleccionada.nombres= idseleccionada;
+this.systechService.get('orden?nombres='+ this.ordenSeleccionada.nombres).subscribe(
+  (response)=>{
+    this.datatest=response;
+console.log(response);
+  })
+
+  }
+
+  getOrdenCedula(idseleccionada: Orden){
+    this.ordenSeleccionada.cedula= idseleccionada;
+this.systechService.get('orden?cedula='+ this.ordenSeleccionada.cedula).subscribe(
+  (response)=>{
+    this.datatest=response;
+console.log(response);
   })
 
   }
