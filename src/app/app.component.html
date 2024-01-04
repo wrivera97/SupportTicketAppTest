@@ -6,14 +6,39 @@
   <title>Document</title>
 </head>
 <body class="bg-light">
-  <nav class="navbar navbar-light bg-light">
-    <form class="container-fluid justify-content-start d-flex">
-      <button type="button" class="btn btn-sm btn-outline-secondary me-2" autocomplete="off" checked (click)="this.getOrdenes()">INICIO</button>
-      <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#ingresoModal">NUEVO</button>
-      <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#searchModal">CONSULTAR</button>
-      <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#actualizarModal">ACTUALIZAR ESTADO</button>
-      <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#bodegaModal">EQUIPOS EN BODEGA</button>
-    </form>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/" type="button" class="btn btn-sm btn-outline-secondary me-2"><i class="bi bi-house-fill"></i>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+          </li>
+          <li class="nav-item">
+            <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#ingresoModal"><i class="bi bi-plus-circle"></i> NUEVO</button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="bi bi-search"></i> CONSULTAR</button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#actualizarModal"> <i class="bi bi-box-arrow-up-right"></i> ACTUALIZAR ESTADO</button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#bodegaModal"><i class="bi bi-stack"></i> EQUIPOS EN BODEGA</button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#archiveModal" (click)="getArchive()" disabled><i class="bi bi-box-fill"></i> ARCHIVADOS</button>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#" disabled><i class="bi bi-gear"></i></button>
+          <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#" disabled><i class="bi bi-box-arrow-in-right"></i></button>
+        </form>
+      </div>
+    </div>
   </nav>
 
   <!-- Modal postOrden -->
@@ -24,6 +49,10 @@
         <h5 class="modal-title" id="exampleModalLabel"> NUEVO INGRESO </h5>
         <!--<a  class="btn btn-light text-ligth">{{currentDate | date:'dd-MM-yyyy'}}<span class="badge badge-light"></span></a>-->
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>*Recuerde</strong> llenar los datos correctamente, una vez ingresados no se podra modificar!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form  #myForm= "ngForm">
@@ -48,23 +77,23 @@
 </div>
 
 <div class="input-group mb-3">
-  <select class="form-select text-uppercase"  name="seleccionarDispositivo" [(ngModel)]="nuevaOrden.tipo" (change)="getDispositivo(seleccionarDispositivo.tipo)">
+  <select class="form-select text-uppercase"  name="seleccionarDispositivo" [(ngModel)]="nuevaOrden.tipo" (change)="getDispositivo(seleccionarDispositivo.tipo)" required>
     <option class="text-uppercase custom-select">EQUIPO</option>
     <option  *ngFor="let equipo of dispositivos" id="tipo" name="tipo">{{equipo.tipo}}</option>
  </select>
 
-  <select class="form-select text-uppercase"  name="seleccionarMarca" [(ngModel)]="nuevaOrden.marca" (change)="getMarca(seleccionarMarca.marca)">
+  <select class="form-select text-uppercase"  name="seleccionarMarca" [(ngModel)]="nuevaOrden.marca" (change)="getMarca(seleccionarMarca.marca)" required>
     <option class="text-uppercase custom-select">MARCA</option>
   <option  *ngFor="let nombre of marcas">{{nombre.marca}}</option>
  </select>
 
   <span class="input-group-text">Modelo:</span>
-  <input type="text" class="form-control" [(ngModel)]="nuevaOrden.modelo" id="modelo" name="modelo" placeholder="PAVILION" required>
+  <input type="text" class="form-control" [(ngModel)]="nuevaOrden.modelo" id="modelo" name="modelo" placeholder="Eje. Latitude" required>
 </div>
 
 
 <div class="input-group mb-3">
-  <select class="form-select text-uppercase"  name="seleccionarTecnico" [(ngModel)]="nuevaOrden.tecnico" (change)="getTecnico(seleccionarTecnico.nombres)">
+  <select class="form-select text-uppercase"  name="seleccionarTecnico" [(ngModel)]="nuevaOrden.tecnico" (change)="getTecnico(seleccionarTecnico.nombres)" required>
   <option class="text-uppercase custom-select">Tecnico</option>
   <option  name="tecnico" *ngFor="let tecnico of tecnicos">{{tecnico.nombres}}</option>
 </select>
@@ -106,13 +135,15 @@
 <label for="exampleDataList" class="form-label text-center">Ingrese numero de orden</label>
 
 <div class="input-group mb-3">
-  <input class="form-control" list="datalistOptions" id="idOrden" name="idOrden" [(ngModel)]="ordenSeleccionada.idingreso"  placeholder="Eje. 0065 o Juan Aguirre">
+  <input class="form-control" list="datalistOptions" id="idOrden" name="idOrden" [(ngModel)]="ordenSeleccionada.idingreso"  placeholder="Eje. 0065">
   <div class="input-group-append">
-    <button class="btn btn-outline-dark"  (click)="this.getOrden(this.ordenSeleccionada.idingreso);">BUSCAR</button>
+    <button class="btn btn-outline-dark"  (click)="this.getOrden(this.ordenSeleccionada.idingreso);"><i class="bi bi-search"></i></button>
   </div>
 </div>
 
 <div  *ngFor=" let actualizarOrden of datatest" >
+  <br><h6 class="text-ligth alert alert-warning text-center"role="alert">Ultima actualización: {{actualizarOrden.fechaactualizacion | date:'dd-MM-yyyy'}} </h6>
+
   <h4 class="text-uppercase text-secondary text-center"><br>{{actualizarOrden.nombres}} - {{actualizarOrden.cedula}}</h4><br>
 
 
@@ -137,7 +168,7 @@
 
   <div class="input-group mb-3" >
     <span class="input-group-text" >Tecnico:</span>
-    <label class="form-control" aria-label="With textarea" id="tecnico" name="tecnico">{{actualizarOrden.tecnico}} {{actualizarOrden.id}}</label>
+    <label class="form-control" aria-label="With textarea" id="tecnico" name="tecnico">{{actualizarOrden.tecnico}}</label>
 
   <select class="form-select text-uppercase"  [(ngModel)]="actualizarOrden.estado" id="estadoactualizar" name="estadoactualizar">
     <option class="text-uppercase custom-select">*ESTADO</option>
@@ -145,22 +176,22 @@
  </select>
   </div>
 
-  <div class="input-group">
+  <div class="input-group mb-3">
     <span class="input-group-text">Falla reportada:</span>
     <label class="form-control" aria-label="With textarea" id="fallaReportada" name="fallaReportada" disabled>{{actualizarOrden.fallaReportada}} </label>
   </div>
-  <div>
-   -
-  </div>
-  <div class="input-group">
+  <div class="input-group mb-3">
     <span class="input-group-text" >*Diagnostico:</span>
     <textarea class="form-control" aria-label="With textarea" id="diagnostico" name="diagnostico" [(ngModel)]="actualizarOrden.diagnostico">{{actualizarOrden.diagnostico}}</textarea>
   </div>
-  <button type="" class="btn btn-primary"  (click)="patchOrden(actualizarOrden)" >Actualizar</button>
-</div>
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <button type="button" class="btn btn-outline-dark" (click)="patchOrden(actualizarOrden)" >Actualizar</button>
+  </div>
 
+</div>
       </div>
       <div class="modal-footer">
+
         <div class="alert alert-warning" role="alert">
          * Solo podra actualizar el ESTADO y DIAGNOSTICO de la orden!
         </div>
@@ -185,27 +216,25 @@
       <div class="modal-body bg-light">
 
 
-<label for="exampleDataList" class="form-label text-center">Ingrese numero de orden, cedula o nombres</label>
+<label for="exampleDataList" class="form-label text-center">Ingrese numero de orden, nombres o cedula</label>
 
 <div class="input-group mb-3">
   <input class="form-control text-capitalize" list="datalistOptions" id="idOrden" name="idOrden" [(ngModel)]="ordenSeleccionada.idingreso"  placeholder="Eje. 0065, Juan Aguirre o 1712345678">
   <div class="input-group-append">
-
     <div class="btn-group dropend">
-      <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
-          aria-expanded="false">
-          Buscar por
-      </button>
+      <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-search"></i></button>
       <ul class="dropdown-menu" style="">
-          <li><a class="dropdown-item" (click)="this.getOrden(ordenSeleccionada.idingreso)"># Orden</a></li>
-          <li><a class="dropdown-item" (click)="this.getOrdenNombre(ordenSeleccionada.idingreso)">Nombre & Apellido</a></li>
+          <li><a class="dropdown-item" (click)="this.getOrden(ordenSeleccionada.idingreso)">Orden</a></li>
+          <li><a class="dropdown-item" (click)="this.getOrdenNombre(ordenSeleccionada.idingreso)">Nombres</a></li>
           <li><a class="dropdown-item" (click)="this.getOrdenCedula(ordenSeleccionada.idingreso)">Cedula</a></li>
       </ul>
   </div>
-
   </div>
 </div>
-
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>*Recuerde!</strong> ingresar la información y a continuación seleccionar el tipo de busqueda!
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 <div  *ngFor=" let test of datatest" >
 
   <br><h6 class="text-ligth alert alert-warning text-center"role="alert">Este equipo ingresó el : {{test.fecha | date:'dd-MM-yyyy'}} </h6>
@@ -265,20 +294,19 @@
       </div>
       <div class="row row-cols-1 row-cols-md-3 g-4" >
         <div class="col"*ngFor="let bodegaOrden of OrdenEstado | orderBy: '-' | paginate: { itemsPerPage: 9, currentPage: pb } ">
-          <div class="card h-100 card text-dark card-left bg-light mb-3"  style="max-width: 25rem; ">
-            <div class="card-header"  [ngClass]="{'bg-info':bodegaOrden.estado =='BODEGA',
-      'bg-success':bodegaOrden.estado==='LISTO', 'bg-danger':bodegaOrden.estado=='NOVEDAD','bg-warning':bodegaOrden.estado=='REVISION'}">(ORDEN # {{bodegaOrden.idingreso}} ) {{bodegaOrden.estado}} </div>
+          <div class="card h-100 card text-dark card-left mb-3 shadow-lg p-3 mb-5 bg-white rounded"  style="max-width: 25rem; ">
+            <div class="card-header"  [ngClass]="{'bg-info':bodegaOrden.estado =='BODEGA'}">(ORDEN # {{bodegaOrden.idingreso}} ) {{bodegaOrden.estado}} </div>
             <div class="card-body">
-              <h6 class="card-title text-uppercase font-weight-bold">CLIENTE: {{bodegaOrden.nombres}}</h6>
-              <h6 class="card-title text-uppercase">CI: {{bodegaOrden.cedula}}</h6>
-              <h6 class="card-title text-uppercase">EQUIPO: {{bodegaOrden.tipo}} {{bodegaOrden.marca}} {{bodegaOrden.modelo}} </h6>
-              <h6 class="card-title text-uppercase">FALLA: {{bodegaOrden.fallaReportada}} {{bodegaOrden.comentario}} </h6>
-              <p class="card-text text-uppercase">DIAGNOSTICO:
-               ( {{bodegaOrden.diagnostico}})</p>
+              <p class="card-title text-uppercase font-weight-bold"><i class="bi bi-person"></i> CLIENTE: {{bodegaOrden.nombres}}</p>
+              <p class="card-title text-uppercase"><i class="bi bi-person-vcard"></i> CI: {{bodegaOrden.cedula}}</p>
+              <p class="card-title text-uppercase"><i class="bi bi-pc-display"></i> EQUIPO: {{bodegaOrden.tipo}} {{bodegaOrden.marca}} {{bodegaOrden.modelo}} </p>
+              <p class="card-title text-uppercase"><i class="bi bi-lightning-fill"></i> FALLA: {{bodegaOrden.fallaReportada}} {{bodegaOrden.comentario}} </p>
+              <h6 class="card-text text-uppercase"><i class="bi bi-chat-text-fill"></i> DIAGNOSTICO:
+               ( {{bodegaOrden.diagnostico}})</h6>
             </div>
             <div class="card-footer">
-              <small class="text-ligth text-center ">Fecha ingreso: {{bodegaOrden.fecha | date:'dd-MM-yyyy'}} </small>
-            <a class="btn btn-outline-info btn-sm" role="button" href="{{'https://api.whatsapp.com/send/?phone=593'+ bodegaOrden.telefono +'&text=Buen dia %2C de soluciones informaticas donde usted dejo su equipo para revision le comento que su equipo:&type=phone_number&app_absent=0'}}" target="_blank" rel="noopener noreferrer">N</a>
+              <small class="text-ligth text-center "><i class="bi bi-info-circle-fill"></i> Fecha ingreso: {{bodegaOrden.fecha | date:'dd-MM-yyyy'}} </small>
+            <a class="btn btn-outline-success btn-sm" role="button" href="{{'https://api.whatsapp.com/send/?phone=593'+ bodegaOrden.telefono +'&text=Buen dia %2C de soluciones informaticas donde usted dejo su equipo para revision le comento que su equipo:&type=phone_number&app_absent=0'}}" target="_blank" rel="noopener noreferrer"><i class="bi bi-whatsapp"></i></a>
             </div>
           </div>
         </div>
@@ -289,28 +317,62 @@
     </div>
   </div>
 </div>
-
+<!--ARCHIVADOS-->
+<div class="modal fade modal-xl bg-secondary" id="archiveModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content ">
+      <div class="modal-header ">
+       <h4 class="text-uppercase text-secondary text-center"><br> EQUIPOS ARCHIVADOS</h4><br>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="row row-cols-1 row-cols-md-3 g-4" >
+        <div class="col"*ngFor="let archivoOrden of archiveOrden | orderBy: '-' | paginate: { itemsPerPage: 9, currentPage: pa } ">
+          <div class="card h-100 card text-dark card-left mb-3 shadow-lg p-3 mb-5 bg-white rounded"  style="max-width: 25rem; ">
+            <div class="card-header"  [ngClass]="{'bg-info':archivoOrden.estado =='BODEGA'}">(ORDEN # {{archivoOrden.idingreso}} ) {{archivoOrden.estado}} </div>
+            <div class="card-body">
+              <p class="card-title text-uppercase font-weight-bold"><i class="bi bi-person"></i> CLIENTE: {{archivoOrden.nombres}}</p>
+              <p class="card-title text-uppercase"><i class="bi bi-person-vcard"></i> CI: {{archivoOrden.cedula}}</p>
+              <p class="card-title text-uppercase"><i class="bi bi-pc-display"></i> EQUIPO: {{archivoOrden.tipo}} {{archivoOrden.marca}} {{archivoOrden.modelo}} </p>
+              <p class="card-title text-uppercase"><i class="bi bi-lightning-fill"></i> FALLA: {{archivoOrden.fallaReportada}} {{archivoOrden.comentario}} </p>
+              <h6 class="card-text text-uppercase"><i class="bi bi-chat-text-fill"></i> DIAGNOSTICO:
+               ( {{archivoOrden.diagnostico}})</h6>
+            </div>
+            <div class="card-footer">
+              <small class="text-ligth text-center "><i class="bi bi-info-circle-fill"></i> Fecha ingreso: {{archivoOrden.fecha | date:'dd-MM-yyyy'}} </small>
+            <a class="btn btn-outline-success btn-sm" role="button" href="{{'https://api.whatsapp.com/send/?phone=593'+ archivoOrden.telefono +'&text=Buen dia %2C de soluciones informaticas donde usted dejo su equipo para revision le comento que su equipo:&type=phone_number&app_absent=0'}}" target="_blank" rel="noopener noreferrer"><i class="bi bi-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+        </div>
+      <div class="modal-footer">
+        <pagination-controls class="text-center" previousLabel="Ant.." nextLabel="Sig.." (pageChange)="pb = $event"></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
 <!---getOrdenes-->
 <div>
-   <h4 class="text-uppercase text-secondary text-center"><br>Historial de equipos </h4><br></div>
+   <h4 class="text-uppercase text-secondary text-center"><br>
+    Historial de equipos <a type="button" (click)="this.getOrdenes()"><i class="bi bi-arrow-repeat"></i></a></h4><br></div>
 
   <div class="row row-cols-1 row-cols-md-3 g-4" >
     <div class="col"*ngFor="let ordenesT of Ordenes | orderBy: '-' | paginate: { itemsPerPage: 9, currentPage: p } ">
-      <div class="card h-100 card text-dark card-left bg-light mb-3"  style="max-width: 25rem; ">
-        <div class="card-header"  [ngClass]="{'bg-info':ordenesT.estado =='BODEGA',
-  'bg-success':ordenesT.estado==='LISTO', 'bg-danger':ordenesT.estado=='NOVEDAD','bg-warning':ordenesT.estado=='REVISION'}">(ORDEN # {{ordenesT.idingreso}} ) {{ordenesT.estado}} </div>
+      <div class="card h-100 card text-dark card-left bg-light mb-3 shadow-lg p-3 mb-5 bg-white rounded"  style="max-width: 25rem; ">
+        <div class="card-header text-light"  [ngClass]="{'bg-info':ordenesT.estado =='BODEGA','bg-primary':ordenesT.estado==='LISTO','bg-success': ordenesT.estado==='RETIRADO',
+        'bg-secondary': ordenesT.estado==='REVISION','bg-danger' :ordenesT.estado=='NOVEDAD','bg-warning':ordenesT.estado=='PENDIENTE','bg-dark':ordenesT.estado=='INGRESADO'}">(ORDEN # {{ordenesT.idingreso}} ) {{ordenesT.estado}} </div>
         <div class="card-body">
-          <h6 class="card-title text-uppercase font-weight-bold">CLIENTE: {{ordenesT.nombres}}</h6>
-          <h6 class="card-title text-uppercase">CI: {{ordenesT.cedula}}</h6>
-          <h6 class="card-title text-uppercase">EQUIPO: {{ordenesT.tipo}} {{ordenesT.marca}} {{ordenesT.modelo}} </h6>
-          <h6 class="card-title text-uppercase">FALLA: {{ordenesT.fallaReportada}} {{ordenesT.comentario}} </h6>
-          <p class="card-text text-uppercase">DIAGNOSTICO:
-           ( {{ordenesT.diagnostico}})</p>
+          <p class="card-title text-uppercase"><i class="bi bi-person"></i> CLIENTE: {{ordenesT.nombres}}</p>
+          <p class="card-title text-uppercase"><i class="bi bi-person-vcard"></i> CI: {{ordenesT.cedula}}</p>
+          <p class="card-title text-uppercase"><i class="bi bi-pc-display"></i> EQUIPO: {{ordenesT.tipo}} {{ordenesT.marca}} {{ordenesT.modelo}} </p>
+          <p class="card-title text-uppercase"><i class="bi bi-lightning-fill"></i> FALLA: {{ordenesT.fallaReportada}} {{ordenesT.comentario}} </p>
+          <h6 class="card-text text-uppercase"><i class="bi bi-chat-text-fill"></i> DIAGNOSTICO:
+           ( {{ordenesT.diagnostico}})</h6>
         </div>
         <div class="card-footer">
-          <small class="text-ligth text-center ">Fecha ingreso: {{ordenesT.fecha | date:'dd-MM-yyyy'}} </small>
-        <a class="btn btn-outline-info btn-sm" role="button" href="{{'https://api.whatsapp.com/send/?phone=593'+ ordenesT.telefono +'&text=Buen dia %2C de soluciones informaticas donde usted dejo su equipo para revision le comento que su equipo:&type=phone_number&app_absent=0'}}" target="_blank" rel="noopener noreferrer">N</a>
-         <!--<button class="btn btn-outline-secondary btn-sm" type="button">A</button>-->
+          <small class="text-ligth text-center "><i class="bi bi-info-circle-fill"></i> Fecha ingreso: {{ordenesT.fecha | date:'dd-MM-yyyy'}} </small>
+        <a class="btn btn-outline-success btn-sm" role="button" href="{{'https://api.whatsapp.com/send/?phone=593'+ ordenesT.telefono +'&text=Buen dia %2C de soluciones informaticas donde usted dejo su equipo para revision le comento que su equipo:&type=phone_number&app_absent=0'}}" target="_blank" rel="noopener noreferrer"> <i class="bi bi-whatsapp"></i></a> -
+
+        <button class="btn btn-outline-secondary btn-sm" disabled> <i class="bi bi-folder-symlink-fill"></i></button>
         </div>
       </div>
     </div>

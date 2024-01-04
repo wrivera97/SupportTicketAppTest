@@ -11,6 +11,7 @@ import { patchTest } from './models/patchtest.model';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
+  /**templateUrl: './login/login.component.html',**/
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
@@ -29,9 +30,11 @@ export class AppComponent implements OnInit {
   currentDate = new Date();
   datatest:Orden| any;
   estados:Estado | any;
+  archiveOrden: any;
 
   p:number =1;
   pb: number=1;
+  pa: number =1;
 
 
   constructor(private systechService: SystechService) {
@@ -71,6 +74,7 @@ export class AppComponent implements OnInit {
     this.systechService.get('tecnico?nombre'+ this.seleccionarTecnico.nombres).subscribe(
       (response) =>{
         this.seleccionarTecnico= response;
+        console.log(response)
 
       }
 
@@ -166,7 +170,7 @@ this.systechService.patch('orden/'+ this.actualizarOrden.id , this.actualizarOrd
 
 
   getOrdenes(){
-this.systechService.get('orden').subscribe(
+this.systechService.get('orden?estado=LISTO&estado=NOVEDAD&estado=INGRESADO&estado=REVISION&estado=PENDIENTE&estado=RETIRADO').subscribe(
   (response)=>{
 this.Ordenes=response;
 
@@ -221,4 +225,11 @@ getEstados(){
     }
   )
 }
+getArchive(){
+  this.systechService.get('orden?estado=ARCHIVADO').subscribe(
+    (response)=>{
+      this.archiveOrden=response;
+    })
+
+  }
 }
