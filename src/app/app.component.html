@@ -27,10 +27,10 @@
             <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#actualizarModal"> <i class="bi bi-box-arrow-up-right"></i> ACTUALIZAR ESTADO</button>
           </li>
           <li class="nav-item">
-            <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#bodegaModal"><i class="bi bi-stack"></i> EQUIPOS EN BODEGA</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#bodegaModal"><i class="bi bi-box-fill"></i> EQUIPOS EN BODEGA</button>
           </li>
           <li class="nav-item">
-            <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#archiveModal" (click)="getArchive()" disabled><i class="bi bi-box-fill"></i> ARCHIVADOS</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#archiveModal" (click)="getArchive()" disabled> <i class="bi bi-stack"></i> ARCHIVADOS</button>
           </li>
         </ul>
         <form class="d-flex">
@@ -94,7 +94,7 @@
 
 <div class="input-group mb-3">
   <select class="form-select text-uppercase"  name="seleccionarTecnico" [(ngModel)]="nuevaOrden.tecnico" (change)="getTecnico(seleccionarTecnico.nombres)" required>
-  <option class="text-uppercase custom-select">Tecnico</option>
+  <option class="text-uppercase custom-select">Recibido por:</option>
   <option  name="tecnico" *ngFor="let tecnico of tecnicos">{{tecnico.nombres}}</option>
 </select>
 </div>
@@ -167,7 +167,7 @@
   </div>
 
   <div class="input-group mb-3" >
-    <span class="input-group-text" >Tecnico:</span>
+    <span class="input-group-text" >Recibido por:</span>
     <label class="form-control" aria-label="With textarea" id="tecnico" name="tecnico">{{actualizarOrden.tecnico}}</label>
 
   <select class="form-select text-uppercase"  [(ngModel)]="actualizarOrden.estado" id="estadoactualizar" name="estadoactualizar">
@@ -184,6 +184,12 @@
     <span class="input-group-text" >*Diagnostico:</span>
     <textarea class="form-control" aria-label="With textarea" id="diagnostico" name="diagnostico" [(ngModel)]="actualizarOrden.diagnostico">{{actualizarOrden.diagnostico}}</textarea>
   </div>
+
+  <div class="input-group mb-3">
+    <span class="input-group-text">Añadir imagen:</span>
+      <input class="form-control" type="file" id="formFile">
+    </div>
+
   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
     <button type="button" class="btn btn-outline-dark" (click)="patchOrden(actualizarOrden)" >Actualizar</button>
   </div>
@@ -261,7 +267,7 @@
   </div>
 
   <div class="input-group mb-3">
-    <span class="input-group-text" >Tecnico:</span>
+    <span class="input-group-text" >Recibido por:</span>
     <label class="form-control" aria-label="With textarea" id="tecnico" name="tecnico">{{test.tecnico}} </label>
   </div>
 
